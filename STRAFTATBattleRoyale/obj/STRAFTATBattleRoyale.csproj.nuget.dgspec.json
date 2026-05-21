@@ -1,0 +1,55 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\www\\mods\\STRAFTATBattleRoyale\\STRAFTATBattleRoyale.csproj": {}
+  },
+  "projects": {
+    "C:\\www\\mods\\STRAFTATBattleRoyale\\STRAFTATBattleRoyale.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\www\\mods\\STRAFTATBattleRoyale\\STRAFTATBattleRoyale.csproj",
+        "projectName": "STRAFTATBattleRoyale",
+        "projectPath": "C:\\www\\mods\\STRAFTATBattleRoyale\\STRAFTATBattleRoyale.csproj",
+        "packagesPath": "C:\\Users\\fran\\.nuget\\packages\\",
+        "outputPath": "C:\\www\\mods\\STRAFTATBattleRoyale\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\fran\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net46"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net46": {
+            "targetAlias": "net46",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net46": {
+          "targetAlias": "net46",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

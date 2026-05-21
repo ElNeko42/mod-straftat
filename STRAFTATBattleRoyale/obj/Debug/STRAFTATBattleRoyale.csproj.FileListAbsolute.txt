@@ -1,0 +1,9 @@
+C:\www\mods\STRAFTATBattleRoyale\obj\Debug\STRAFTATBattleRoyale.csproj.AssemblyReference.cache
+C:\www\mods\STRAFTATBattleRoyale\obj\Debug\STRAFTATBattleRoyale.GeneratedMSBuildEditorConfig.editorconfig
+C:\www\mods\STRAFTATBattleRoyale\obj\Debug\STRAFTATBattleRoyale.AssemblyInfoInputs.cache
+C:\www\mods\STRAFTATBattleRoyale\obj\Debug\STRAFTATBattleRoyale.AssemblyInfo.cs
+C:\www\mods\STRAFTATBattleRoyale\obj\Debug\STRAFTATBattleRoyale.csproj.CoreCompileInputs.cache
+E:\SteamLibrary\steamapps\common\STRAFTAT\BepInEx\plugins\STRAFTATBattleRoyale\STRAFTATBattleRoyale.dll
+E:\SteamLibrary\steamapps\common\STRAFTAT\BepInEx\plugins\STRAFTATBattleRoyale\STRAFTATBattleRoyale.pdb
+C:\www\mods\STRAFTATBattleRoyale\obj\Debug\STRAFTATBattleRoyale.dll
+C:\www\mods\STRAFTATBattleRoyale\obj\Debug\STRAFTATBattleRoyale.pdb

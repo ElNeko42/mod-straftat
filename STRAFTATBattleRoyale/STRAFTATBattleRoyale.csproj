@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+    <AssemblyName>STRAFTATBattleRoyale</AssemblyName>
+    <RootNamespace>STRAFTATBattleRoyale</RootNamespace>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- Copia el DLL compilado directamente a la carpeta de plugins de BepInEx -->
+    <OutputPath>E:\SteamLibrary\steamapps\common\STRAFTAT\BepInEx\plugins\STRAFTATBattleRoyale\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <!-- Referencias a BepInEx (instalar primero, ver README) -->
+  <ItemGroup>
+    <Reference Include="BepInEx">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\BepInEx\core\BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="0Harmony">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Referencias a Unity -->
+  <ItemGroup>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="netstandard">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\netstandard.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\Unity.InputSystem.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Referencias al juego -->
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="FishNet.Runtime">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\FishNet.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ComputerysModdingUtilities">
+      <HintPath>E:\SteamLibrary\steamapps\common\STRAFTAT\STRAFTAT_Data\Managed\ComputerysModdingUtilities.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
