@@ -35,6 +35,12 @@
     <Reference Include="FishNet.Runtime">
       <HintPath>$(GameDLLDir)\FishNet.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(GameDLLDir)\Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(GameDLLDir)\UnityEngine.UI.dll</HintPath>
+    </Reference>
     <Reference Include="Heathen.Steamworks">
       <HintPath>$(GameDLLDir)\Heathen.Steamworks.dll</HintPath>
     </Reference>

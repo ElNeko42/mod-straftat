@@ -19,6 +19,7 @@ namespace STRAFTATBattleRoyale
             _center         = Vector3.zero;
 
             if (_cylinder) GameObject.Destroy(_cylinder);
+            CountdownHUD.Hide();
 
             var tm = FishNet.InstanceFinder.TimeManager;
             tm.OnTick -= TickCountdown;
@@ -32,10 +33,19 @@ namespace STRAFTATBattleRoyale
             if (_ticksUntilZone > 0)
             {
                 _ticksUntilZone--;
+
+                // Muestra cuenta atrás en los últimos 10 segundos (600 ticks)
+                if (_ticksUntilZone <= 600 && _ticksUntilZone % 60 == 0)
+                {
+                    int secondsLeft = _ticksUntilZone / 60;
+                    CountdownHUD.Show(secondsLeft);
+                    Plugin.Log.LogInfo($"[BattleRoyale] Zona en {secondsLeft}s...");
+                }
             }
             else if (!_active)
             {
                 _active = true;
+                CountdownHUD.Show(0);
                 if (_cylinder) GameObject.Destroy(_cylinder);
                 Spawn();
             }
@@ -97,6 +107,18 @@ namespace STRAFTATBattleRoyale
             mat.SetInt("_Cull", 0);
 
             Plugin.Log.LogInfo($"[BattleRoyale] Zona activa. Centro: {_center}  Radio: {_radius}");
+
+            // Oculta el HUD de cuenta atrás tras 2 segundos
+            FishNet.InstanceFinder.TimeManager.OnTick += HideHUDAfterDelay;
+            _hideHudTick = FishNet.InstanceFinder.TimeManager.Tick + 120;
+        }
+
+        static ulong _hideHudTick;
+        static void HideHUDAfterDelay()
+        {
+            if (FishNet.InstanceFinder.TimeManager.Tick < _hideHudTick) return;
+            CountdownHUD.Hide();
+            FishNet.InstanceFinder.TimeManager.OnTick -= HideHUDAfterDelay;
         }
     }
 }
