@@ -1,57 +1,80 @@
+using System.Collections.Generic;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
-using HarmonyLib;
+using ComputerysModdingUtilities;
+using HeathenEngineering.SteamworksIntegration.API;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+[assembly: StraftatMod(isVanillaCompatible: false)]
 
 namespace STRAFTATBattleRoyale
 {
-    [BepInPlugin(PluginInfo.GUID, PluginInfo.NAME, PluginInfo.VERSION)]
+    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
-        public static Plugin Instance { get; private set; } = null!;
         public static ManualLogSource Log { get; private set; } = null!;
 
         public static ConfigEntry<float> ZoneInitialRadius   { get; private set; } = null!;
         public static ConfigEntry<float> ZoneFinalRadius     { get; private set; } = null!;
-        public static ConfigEntry<float> ZoneShrinkDuration  { get; private set; } = null!;
+        public static ConfigEntry<float> ZoneShrinkRate      { get; private set; } = null!;
         public static ConfigEntry<float> ZoneDamagePerSecond { get; private set; } = null!;
-        public static ConfigEntry<int>   ZoneShrinkPhases    { get; private set; } = null!;
-        public static ConfigEntry<float> ZonePhaseWaitTime   { get; private set; } = null!;
-
-        private Harmony _harmony = null!;
+        public static ConfigEntry<int>   SecondsUntilZone    { get; private set; } = null!;
+        public static ConfigEntry<float> ZoneAlpha           { get; private set; } = null!;
+        public static ConfigEntry<string> ZoneColor          { get; private set; } = null!;
 
         private void Awake()
         {
-            Instance = this;
-            Log      = Logger;
+            gameObject.hideFlags = HideFlags.HideAndDontSave;
+            Log = Logger;
 
             BindConfig();
 
-            _harmony = new Harmony(PluginInfo.GUID);
-            _harmony.PatchAll();
+            PauseManager.OnBeforeSpawn += BattleRoyaleZone.Reset;
 
-            gameObject.AddComponent<SoloModeKeyListener>();
+            SceneManager.sceneLoaded += OnSceneLoaded;
 
-            Log.LogInfo($"{PluginInfo.NAME} v{PluginInfo.VERSION} cargado correctamente.");
-            if (SoloMode.Enabled.Value)
-                Log.LogInfo("[SoloMode] Modo solo ACTIVADO — pulsa F8 en el lobby.");
+            Log.LogInfo("================================================");
+            Log.LogInfo($"  {PluginInfo.PLUGIN_NAME} v{PluginInfo.PLUGIN_VERSION}");
+            Log.LogInfo($"  Hora : {System.DateTime.Now:dd/MM/yyyy HH:mm:ss}");
+            Log.LogInfo("================================================");
+
+            StartCoroutine(LogSteamName());
+        }
+
+        private static System.Collections.IEnumerator LogSteamName()
+        {
+            float w = 0f;
+            while (w < 10f)
+            {
+                try
+                {
+                    string? name = Friends.Client.PersonaName;
+                    if (!string.IsNullOrEmpty(name)) { Log.LogInfo($"  Jugador : {name}"); yield break; }
+                }
+                catch { }
+                yield return new WaitForSeconds(0.5f);
+                w += 0.5f;
+            }
+        }
+
+        private static readonly HashSet<string> _menuScenes = new() { "MainMenu", "Menu", "main_menu", "Loading" };
+        private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            if (_menuScenes.Contains(scene.name)) return;
+            Log.LogInfo($"[Sesión] Modo: '{scene.name}' — {System.DateTime.Now:HH:mm:ss}");
         }
 
         private void BindConfig()
         {
-            ZoneInitialRadius   = Config.Bind("Zona",   "RadioInicial",     120f, "Radio inicial de la zona (metros).");
-            ZoneFinalRadius     = Config.Bind("Zona",   "RadioFinal",         5f, "Radio minimo de la zona.");
-            ZoneShrinkDuration  = Config.Bind("Zona",   "DuracionReduccion", 60f, "Segundos por fase de cierre.");
-            ZoneShrinkPhases    = Config.Bind("Zona",   "NumFases",            4, "Numero de fases.");
-            ZonePhaseWaitTime   = Config.Bind("Zona",   "EsperaPorFase",     30f, "Espera antes de cerrar cada fase.");
-            ZoneDamagePerSecond = Config.Bind("Dano",   "DanoPorSegundo",    10f, "Dano por segundo fuera de zona.");
-
-            SoloMode.Enabled    = Config.Bind("ModoSolo", "Activado", true, "Permite iniciar partida con 1 jugador.");
-        }
-
-        private void OnDestroy()
-        {
-            _harmony?.UnpatchSelf();
+            ZoneColor          = Config.Bind("Zona", "Color",          "110, 53, 45", "R, G, B");
+            ZoneInitialRadius  = Config.Bind("Zona", "RadioInicial",   37.5f,  "Radio inicial (unidades del juego).");
+            ZoneFinalRadius    = Config.Bind("Zona", "RadioFinal",     10f,    "Radio minimo.");
+            ZoneShrinkRate     = Config.Bind("Zona", "VelocidadCierre",1f,    "Unidades por segundo que se cierra.");
+            SecondsUntilZone   = Config.Bind("Zona", "SegundosInicio", 45,    "Segundos hasta que aparece la zona.");
+            ZoneDamagePerSecond= Config.Bind("Zona", "DanoPorSegundo", 10f,   "Dano por segundo fuera de la zona.");
+            ZoneAlpha          = Config.Bind("Zona", "Transparencia",  0.5f,  "0.0 = invisible, 1.0 = solido.");
         }
     }
 }

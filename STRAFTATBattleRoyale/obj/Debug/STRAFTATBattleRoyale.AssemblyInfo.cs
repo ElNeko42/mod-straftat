@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("STRAFTATBattleRoyale")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+577dbcffa7d7ed1c6509c47ee7255ff999c0389e")]
 [assembly: System.Reflection.AssemblyProductAttribute("STRAFTATBattleRoyale")]
 [assembly: System.Reflection.AssemblyTitleAttribute("STRAFTATBattleRoyale")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
