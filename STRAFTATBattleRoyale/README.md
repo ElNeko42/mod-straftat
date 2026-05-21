@@ -29,7 +29,8 @@ Añade una zona que se va cerrando al estilo Battle Royale. Los jugadores fuera 
 
 ### Paso 2 — Instalar el mod
 
-1. Descarga el archivo `STRAFTATBattleRoyale.dll`
+1. Descarga el archivo `STRAFTATBattleRoyale.dll` desde la carpeta **release/** de este repositorio
+   (click en el archivo → botón **Download raw file**)
 
 2. Cópialo a esta carpeta (créala si no existe):
    ```
