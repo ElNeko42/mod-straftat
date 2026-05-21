@@ -76,7 +76,7 @@ namespace STRAFTATBattleRoyale
             ZoneInitialRadius   = Config.Bind("Zona", "RadioInicial",    37.5f, "Radio inicial.");
             ZoneFinalRadius     = Config.Bind("Zona", "RadioFinal",      10f,   "Radio minimo.");
             ZoneShrinkRate      = Config.Bind("Zona", "VelocidadCierre", 1f,    "Unidades por segundo.");
-            SecondsUntilZone    = Config.Bind("Zona", "SegundosInicio",  45,    "Segundos hasta que aparece la zona.");
+            SecondsUntilZone    = Config.Bind("Zona", "SegundosInicio",  25,    "Segundos hasta que aparece la zona.");
             ZoneDamagePerSecond = Config.Bind("Zona", "DanoPorSegundo",  10f,   "Dano por segundo fuera de la zona.");
             ZoneAlpha           = Config.Bind("Zona", "Transparencia",   0.5f,  "0.0 = invisible, 1.0 = solido.");
         }

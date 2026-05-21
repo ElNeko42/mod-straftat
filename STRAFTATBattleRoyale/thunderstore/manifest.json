@@ -1,0 +1,7 @@
+{
+    "name": "BattleRoyale",
+    "version_number": "1.0.2",
+    "website_url": "",
+    "description": "Adds a Battle Royale shrinking zone to STRAFTAT. A radioactive green cylinder closes in over time - stay inside or take damage. Countdown HUD shows when the zone is about to appear.",
+    "dependencies": []
+}
