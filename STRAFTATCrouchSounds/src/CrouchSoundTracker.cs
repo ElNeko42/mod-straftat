@@ -1,10 +1,12 @@
 using UnityEngine;
+using FishNet;
 
 namespace STRAFTATCrouchSounds
 {
     public class CrouchSoundTracker : MonoBehaviour
     {
-        FirstPersonController _fpc;
+        FirstPersonController        _fpc;
+        FishNet.Object.NetworkObject _nob;
         float _crouchTimer;
         bool  _soundsActive;
         float _clipTimer;
@@ -12,6 +14,8 @@ namespace STRAFTATCrouchSounds
         void Start()
         {
             _fpc = GetComponent<FirstPersonController>();
+            _nob = GetComponent<FishNet.Object.NetworkObject>();
+            Plugin.Log.LogInfo($"[CrouchSounds] Listo — IsServer:{InstanceFinder.IsServer}  IsClient:{InstanceFinder.IsClient}  IsOwner:{_nob?.IsOwner}");
         }
 
         void Update()
@@ -20,7 +24,6 @@ namespace STRAFTATCrouchSounds
 
             if (!_fpc.isCrouching)
             {
-                // Player stood up — reset everything
                 if (_crouchTimer > 0f || _soundsActive)
                 {
                     _crouchTimer  = 0f;
@@ -33,7 +36,6 @@ namespace STRAFTATCrouchSounds
             _crouchTimer += Time.deltaTime;
             if (_crouchTimer < 3f) return;
 
-            // First sound after 3 s
             if (!_soundsActive)
             {
                 _soundsActive = true;
@@ -41,7 +43,6 @@ namespace STRAFTATCrouchSounds
                 return;
             }
 
-            // Chain sounds: wait for current clip to finish, then play another
             _clipTimer -= Time.deltaTime;
             if (_clipTimer <= 0f)
                 PlayRandomTaunt();
@@ -52,13 +53,34 @@ namespace STRAFTATCrouchSounds
             var clips = _fpc.tauntClip;
             if (clips == null || clips.Length == 0) return;
 
-            var clip = clips[Random.Range(0, clips.Length)];
+            int maxIdx = Mathf.Min(clips.Length, 9); // solo sonidos de teclas 1-9
+            int idx    = Random.Range(0, maxIdx);
+            var clip   = clips[idx];
             if (clip == null) return;
 
-            _fpc.audio.PlayOneShot(clip);
             _clipTimer = clip.length;
 
-            Plugin.Log.LogInfo($"[CrouchSounds] Sonido: {clip.name} ({clip.length:F1}s)");
+            bool isServer = InstanceFinder.IsServer;
+            bool isClient = InstanceFinder.IsClient;
+            bool isOwner  = _nob != null && _nob.IsOwner;
+
+            if (isServer)
+            {
+                // Host o servidor: PlaySoundObservers manda a todos los clientes y reproduce localmente
+                _fpc.PlaySoundObservers(idx);
+            }
+            else if (isClient && isOwner)
+            {
+                // Cliente propietario: manda al servidor, el servidor hace PlaySoundObservers para todos
+                _fpc.PlaySoundServer(idx);
+            }
+            else
+            {
+                // Sin red activa (training offline) o sin ownership: reproducción local
+                _fpc.audio.PlayOneShot(clip);
+            }
+
+            Plugin.Log.LogInfo($"[CrouchSounds] Sonido {idx + 1}/9 '{clip.name}' | isServer:{isServer} isClient:{isClient} isOwner:{isOwner}");
         }
     }
 }

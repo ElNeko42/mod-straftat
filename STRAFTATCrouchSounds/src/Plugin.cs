@@ -6,7 +6,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[assembly: StraftatMod(isVanillaCompatible: true)]
+[assembly: StraftatMod(isVanillaCompatible: false)]
 
 namespace STRAFTATCrouchSounds
 {
@@ -33,21 +33,20 @@ namespace STRAFTATCrouchSounds
         {
             if (_menuScenes.Contains(scene.name)) return;
             foreach (var fpc in FindObjectsOfType<FirstPersonController>())
-                AttachTracker(fpc);
+                AttachCrouchTracker(fpc);
         }
 
-        public static void AttachTracker(FirstPersonController fpc)
+        public static void AttachCrouchTracker(FirstPersonController fpc)
         {
             if (fpc.GetComponent<CrouchSoundTracker>() == null)
                 fpc.gameObject.AddComponent<CrouchSoundTracker>();
         }
     }
 
-    // También engancha cuando el FPC se crea después de la escena
     [HarmonyPatch(typeof(FirstPersonController), "Awake")]
     static class Patch_FPCAwake
     {
         [HarmonyPostfix]
-        static void Postfix(FirstPersonController __instance) => Plugin.AttachTracker(__instance);
+        static void Postfix(FirstPersonController __instance) => Plugin.AttachCrouchTracker(__instance);
     }
 }

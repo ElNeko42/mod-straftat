@@ -36,6 +36,9 @@
     <Reference Include="FishNet.Runtime" Publicize="true">
       <HintPath>$(GameDLLDir)\FishNet.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.InputSystem">
+      <HintPath>$(GameDLLDir)\Unity.InputSystem.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <Target Name="CopyDllToGame" AfterTargets="PostBuildEvent">
