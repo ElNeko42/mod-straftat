@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BepInEx;
+using BepInEx.Configuration;
 using BepInEx.Logging;
 using ComputerysModdingUtilities;
 using HarmonyLib;
@@ -8,19 +9,23 @@ using UnityEngine.SceneManagement;
 
 [assembly: StraftatMod(isVanillaCompatible: false)]
 
-namespace STRAFTATCrouchSounds
+namespace STRAFTATNuevasMecanicas
 {
     [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
         public static ManualLogSource Log { get; private set; } = null!;
+        public static ConfigEntry<string> MarkKey { get; private set; } = null!;
 
         static readonly HashSet<string> _menuScenes = new() { "MainMenu", "Menu", "main_menu", "Loading" };
 
         private void Awake()
         {
             Log = Logger;
+            MarkKey = Config.Bind("Z-Mark Teleport", "MarkKey", "Z",
+                "Key to place / use the teleport mark. Examples: Z, X, C, G, H, V, B, N, F1-F12, Mouse0, Mouse1, Mouse2");
             gameObject.hideFlags = HideFlags.HideAndDontSave;
+            gameObject.AddComponent<SettingsUI>();
             new Harmony(PluginInfo.PLUGIN_GUID).PatchAll();
             SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -40,6 +45,8 @@ namespace STRAFTATCrouchSounds
         {
             if (fpc.GetComponent<CrouchSoundTracker>() == null)
                 fpc.gameObject.AddComponent<CrouchSoundTracker>();
+            if (fpc.GetComponent<ZMarkTracker>() == null)
+                fpc.gameObject.AddComponent<ZMarkTracker>();
         }
     }
 

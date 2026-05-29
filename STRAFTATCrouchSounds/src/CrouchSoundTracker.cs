@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using FishNet;
 
-namespace STRAFTATCrouchSounds
+namespace STRAFTATNuevasMecanicas
 {
     public class CrouchSoundTracker : MonoBehaviour
     {
@@ -15,7 +15,7 @@ namespace STRAFTATCrouchSounds
         {
             _fpc = GetComponent<FirstPersonController>();
             _nob = GetComponent<FishNet.Object.NetworkObject>();
-            Plugin.Log.LogInfo($"[CrouchSounds] Listo — IsServer:{InstanceFinder.IsServer}  IsClient:{InstanceFinder.IsClient}  IsOwner:{_nob?.IsOwner}");
+            Plugin.Log.LogInfo($"[CrouchSounds] Listo â€” IsServer:{InstanceFinder.IsServer}  IsClient:{InstanceFinder.IsClient}  IsOwner:{_nob?.IsOwner}");
         }
 
         void Update()
@@ -76,7 +76,7 @@ namespace STRAFTATCrouchSounds
             }
             else
             {
-                // Sin red activa (training offline) o sin ownership: reproducción local
+                // Sin red activa (training offline) o sin ownership: reproducciÃ³n local
                 _fpc.audio.PlayOneShot(clip);
             }
 
